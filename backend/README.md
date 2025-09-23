@@ -1,12 +1,3 @@
----
-
-```markdown
-# 📦 Inventory / Property Management System - Backend
-
-This is the **backend API** for an Inventory / Property Management System, built with **Laravel**.
-It manages **categories, properties, employees, and assignments** (who is using which property).
-
----
 
 ## 🚀 Features
 
@@ -54,7 +45,7 @@ backend/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/inventory-backend.git
+   git clone https://github.com/mullersoft/property-controller.git
    cd inventory-backend
 ````
 
@@ -96,7 +87,6 @@ backend/
 
    API will run at: `http://127.0.0.1:8000`
 
----
 
 ## 📌 API Endpoints
 
@@ -116,7 +106,6 @@ backend/
 * `POST /api/properties` – Create a property
   **Request body:**
 
-  ```json
   {
     "name": "Dell Laptop",
     "category_id": 1,
@@ -128,7 +117,6 @@ backend/
     "manufacturer": "Dell",
     "current_value": 950
   }
-  ```
 
 ### Employees
 
@@ -140,7 +128,6 @@ backend/
 * `GET /api/assignments` – List all assignments
 * `POST /api/assignments` – Assign a property to employee
 
----
 
 ## 🧪 Testing with Postman
 
@@ -149,7 +136,6 @@ backend/
 3. Assign properties to employees using `POST /api/assignments`.
 4. Verify with `GET` requests.
 
----
 
 ## 🤝 Contributing
 
@@ -159,13 +145,5 @@ backend/
 4. Push to your fork
 5. Open a Pull Request
 
----
 
-## 📄 License
-
-This project is licensed under the **MIT License**.
-
-```
-
----
 
