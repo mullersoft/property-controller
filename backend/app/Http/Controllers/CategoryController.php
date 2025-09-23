@@ -10,35 +10,60 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        // $category = Category::all();
-        $getAll = Category::with('property')->get();
+        // $getCategories = Category::all();
+        $getCategories  = Category::with('property')->get();
 
-        // return response()->json($category);
+        // return response()->json($getCategories);
         return response()->json([
             'status' => 'success',
-            'result' => $getAll->count(),
-            'data' => ['category' => $getAll]
+            'result' => $getCategories ->count(),
+           'category' => $getCategories
         ], 200);
     }
 
     public function show($id)
     {
-        // $category = Category::findOrFail($id);
-        $getOne = Category::with('property')->findOrFail($id);
-        // return response()->json($category);
+        // $getCategoryById  = Category::findOrFail($id);
+        $getCategoryById  = Category::with('property')->find($id);
+
+        if (!$getCategoryById) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Category not found'
+        ], 404);
+    }
+        // return response()->json($getCategoryById );
         return response()->json([
             'status' => 'success',
-            'numOfProperties' => $getOne->property->count(),
-            'result' => 1,
-            'data' => ['category' => $getOne]
+            'numOfProperties' => $getCategoryById ->property->count(),
+            'category'  => $getCategoryById
         ]);
     }
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $createCategory = $request->validate([
             'name' => 'required|string|max:255'
         ]);
-        return response()->json($validatedData);
+        // return response()->json($createCategory);
+        $category = Category::create($createCategory);
+        return response()->json([
+            'status' => 'success',
+            'category' => $category
+        ]);
     }
+public function destroy($id){
+        $category = Category::find($id);
+        if(!$category){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Category not fond'
+            ]);
+        }
+        $category->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Category deleted successfully'
+        ]);
+}
 }

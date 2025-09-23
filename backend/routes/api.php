@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\Route;
 //     return response()->json(Category::all());
 // });
 // category
-Route::get('/Category', [CategoryController::class, 'index']);
-Route::get('/Category/{id}', [CategoryController::class, 'show']);
-Route::get('/Category/create', [CategoryController::class, 'store']);
+Route::get('/category', [CategoryController::class, 'index']);
+Route::get('/category/{id}', [CategoryController::class, 'show']);
+Route::post('/category', [CategoryController::class, 'store']);
+Route::delete('/category/{id}', [CategoryController::class,'destroy']);
 // property
 Route::get('/property', [PropertyController::class, 'index']);
 Route::get('/property/{id}', [PropertyController::class, 'show']);
+Route::post('/property', [PropertyController::class, 'store']);
+Route::delete('/property/{id}', [PropertyController::class, 'destroy']);
+
