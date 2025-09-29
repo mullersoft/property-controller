@@ -15,4 +15,11 @@ class Assignment extends Model
         'assigned_date',
         'return_date',
     ];
+    public function employee(){
+        return $this->belongsTo(Employee::class);
+    }
+
+    public function property(){
+        return $this->belongsTo(Property::class);
+    }
 }

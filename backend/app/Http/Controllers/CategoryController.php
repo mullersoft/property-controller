@@ -11,33 +11,33 @@ class CategoryController extends Controller
     public function index()
     {
         // $getCategories = Category::all();
-        $getCategories  = Category::with('property')->get();
+        $getCategories = Category::with('property')->get();
 
         // return response()->json($getCategories);
         return response()->json([
             'status' => 'success',
-            'result' => $getCategories ->count(),
-           'category' => $getCategories
+            'result' => $getCategories->count(),
+            'category' => $getCategories
         ], 200);
     }
 
     public function show($id)
     {
         // $getCategoryById  = Category::findOrFail($id);
-        $getCategoryById  = Category::with('property')->find($id);
+        $getCategoryById = Category::with('property')->find($id);
 
         if (!$getCategoryById) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Category not found'
-        ], 404);
-    }
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Category not found'
+            ], 404);
+        }
         // return response()->json($getCategoryById );
         return response()->json([
             'status' => 'success',
-            'numOfProperties' => $getCategoryById ->property->count(),
-            'category'  => $getCategoryById
-        ]);
+            'numOfProperties' => $getCategoryById->property->count(),
+            'category' => $getCategoryById
+        ],200);
     }
 
     public function store(Request $request)
@@ -50,11 +50,13 @@ class CategoryController extends Controller
         return response()->json([
             'status' => 'success',
             'category' => $category
-        ]);
+        ],201);
     }
-public function destroy($id){
+
+    public function destroy($id)
+    {
         $category = Category::find($id);
-        if(!$category){
+        if (!$category) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Category not fond'
@@ -64,6 +66,33 @@ public function destroy($id){
         return response()->json([
             'status' => 'success',
             'message' => 'Category deleted successfully'
+        ],204);
+    }
+
+    // update category
+    public function update(Request $request, $id)
+    {
+        // Find the category by ID
+        $category = Category::find($id);
+
+        if (!$category) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Category not found'
+            ], 404);
+        }
+
+        // Validate input
+        $validated = $request->validate([
+            'name' => 'required|string|max:255'
         ]);
-}
+
+        // Update category
+        $category->update($validated);
+
+        return response()->json([
+            'status' => 'success',
+            'category' => $category
+        ],200);
+    }
 }

@@ -1,0 +1,42 @@
+ to create laravel project:composer create-project laravel/laravel .
+when you run this code to create a model(php artisan make:model Employee -m) from cmd , then authomaticaly you will get the migration fille  at:
+backend\database\migrations\2025_07_30_123057_create_employees_table.php.
+then you will Define the database structure inside each migration.
+then you will Create the Eloquent model code for each model.
+
+-to create laravel project:
+composer create-project laravel/laravel project_name
+-to create a migration:
+php artisan make:migration create_migration_names_table
+-to create the database name in phpmyadmin:update .env to add database name and then create on php admin
+DB_DATABASE=Database_name
+
+-to create the model :
+php artisan make:model model_name
+-to drope the model:
+php artisan make:model model_name rollback
+to create factory:
+php artisan make:factory Property(model_name)
+-to fresh migration and to seed:
+php artisan migrate:fresh --seed
+to run one seed class:
+php artisan db:seed --class=EmployeeSeeder
+to make seed:
+php artisan make:seeder EmployeeSeeder
+
+
+
+to create migration, factory and seed in one command applied on model:
+php artisan make:model Employee -mfs
+
+
+-to manupulate the data using tinker:
+> use App\Models\Category
+> Category::create(["name" => "mulugeta Linger"])
+> Category::all()
+
+
+-to run migration:
+php artisan migrate
+-to run the code:
+php artisan serve

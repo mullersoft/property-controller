@@ -19,7 +19,6 @@ class PropertyFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            // 'category_id' => fake()->numberBetween(1, 5),
             'category_id' => Category::inRandomOrder()->first()->id,
             'purchase_date' => fake()->date(),
             'purchase_cost' => fake()->numberBetween(100, 1000),

@@ -12,8 +12,11 @@ class Employee extends Model
     protected $fillable =
         [
             'name',
+            'department',
             'email',
             'phone',
-            'department',
         ];
+        public function assignment(){
+            return $this->hasMany(Assignment::class);
+        }
 }

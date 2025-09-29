@@ -25,4 +25,7 @@ class property extends Model
     {
         return $this->belongsTo(Category::class);
     }
+      public function assignment(){
+            return $this->hasMany(Assignment::class);
+        }
 }
