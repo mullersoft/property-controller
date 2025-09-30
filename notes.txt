@@ -40,3 +40,27 @@ php artisan make:model Employee -mfs
 php artisan migrate
 -to run the code:
 php artisan serve
+..............................................................
+frontend
+-uve 3, vite, pinia, tailwind
+-to install vue using vite:
+npm create vite@latest frontend(but before that make sure that there is vue cli installed globaly)
+and then to install the dependencies: npm install.
+-# Pinia (state management)
+npm install pinia
+
+# Vue Router (page navigation)
+npm install vue-router
+
+# Axios (API requests)
+npm install axios
+
+# TailwindCSS
+npm install -D tailwindcss postcss autoprefixer or npm install -D tailwindcss@3 postcss autoprefixer
+// for version 3
+npx tailwindcss init -p
+..................................................................
+to connect backend with frontend:
+D:\qelem meda\inventory sys\backend\config\cors.php:    'allowed_origins_patterns' => ['http://localhost:5173'],
+
+
