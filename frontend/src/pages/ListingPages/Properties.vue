@@ -93,8 +93,8 @@
  * Import necessary Vue utilities and Pinia stores
  */
 import { computed, onMounted, ref } from 'vue';
-import { useCategoryStore } from '../stores/CategoryStore';
-import { usePropertyStore } from '../stores/PropertyStore';
+import { useCategoryStore } from '../../stores/CategoryStore';
+import { usePropertyStore } from '../../stores/PropertyStore';
 
 /**
  * Initialize Pinia stores

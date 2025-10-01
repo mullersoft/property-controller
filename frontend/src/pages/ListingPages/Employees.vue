@@ -54,7 +54,7 @@
 </template>
 <script setup>
 import { onMounted } from 'vue';
-import { useEmployeeStore } from '../stores/EmployeeStore';
+import { useEmployeeStore } from '../../stores/EmployeeStore';
 
 const employeeStore = useEmployeeStore();
 

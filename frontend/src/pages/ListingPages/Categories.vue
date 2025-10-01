@@ -40,7 +40,7 @@
 </template>
 <script setup>
 import { onMounted } from 'vue';
-import { useCategoryStore } from '../stores/CategoryStore';
+import { useCategoryStore } from '../../stores/CategoryStore';
 
 const categoryStore = useCategoryStore();
 

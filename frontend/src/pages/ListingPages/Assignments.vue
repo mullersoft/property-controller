@@ -45,7 +45,7 @@
 </template>
 <script setup>
 import { onMounted } from 'vue';
-import { useAssignmentStore } from '../stores/AssignmentStore';
+import { useAssignmentStore } from '../../stores/AssignmentStore';
 
 const assignmentStore = useAssignmentStore();
 
