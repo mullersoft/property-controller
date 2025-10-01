@@ -12,7 +12,12 @@ class CategoryController extends Controller
     {
         // $getCategories = Category::all();
         $getCategories = Category::with('property')->get();
-
+if($getCategories->isEmpty()){
+    return response()->json([
+        'status' => 'error',
+        'message' => 'No categories found'
+    ], 404);
+}
         // return response()->json($getCategories);
         return response()->json([
             'status' => 'success',
@@ -43,7 +48,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $createCategory = $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
+            'description' => 'string|max:255'
         ]);
         // return response()->json($createCategory);
         $category = Category::create($createCategory);
@@ -84,7 +90,8 @@ class CategoryController extends Controller
 
         // Validate input
         $validated = $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
+            'description' => 'string|max:255'
         ]);
 
         // Update category

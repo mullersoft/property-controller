@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 //     return response()->json(Category::all());
 // });
 // category
-Route::get('/category', [CategoryController::class, 'index']);
+Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/category/{id}', [CategoryController::class, 'show']);
 Route::post('/category', [CategoryController::class, 'store']);
 Route::delete('/category/{id}', [CategoryController::class,'destroy']);

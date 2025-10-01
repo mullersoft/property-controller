@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-8 rounded-2xl shadow-lg max-w-sm mx-auto my-10">
+  <div class="bg-gray-300 p-8 rounded-2xl shadow-lg max-w-sm mx-auto my-24">
     <!-- Title -->
     <h2 class="text-3xl font-bold text-center text-gray-900 mb-6">
       Login to PMS
@@ -49,23 +49,27 @@
       </button>
     </form>
 
-    <!-- Optional Preview -->
-    <div v-if="email || password" class="mt-6 bg-gray-50 p-4 rounded-lg">
-      <p class="text-sm text-gray-600"><strong>Email:</strong> {{ email }}</p>
-      <p class="text-sm text-gray-600"><strong>Password:</strong> ••••••••</p>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '../stores/AuthStore';
 
 const email = ref('');
 const password = ref('');
+const router = useRouter()
+const authStore = useAuthStore();
+const handleLogin = async () => {
+  try{
+    await authStore.login(email.value, password.value);
+          router.push("/admin/assignments");
 
-const handleLogin = () => {
-  console.log('Email:', email.value);
-  console.log('Password:', password.value);
-  alert(`Logged in as: ${email.value}`);
+  } catch(error){
+    console.error('Login failed:', error);
+    alert('Login failed. Please check your credentials and try again.');
+  }
+
 };
 </script>

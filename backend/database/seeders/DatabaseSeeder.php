@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             CategorySeeder::class,
-            PropertySeeder::class
+            PropertySeeder::class,
+            EmployeeSeeder::class,
+            AssignmentSeeder::class
         ]);
     }
 }

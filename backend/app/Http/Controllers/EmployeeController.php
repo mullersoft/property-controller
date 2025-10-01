@@ -10,12 +10,13 @@ class EmployeeController extends Controller
     // index
 
     public function index()
-    {
-        $employee = Employee::with('assignment')->get();
+    {    // Eager load the 'assignment' relationship and its nested 'property' relationship
+
+        $employees = Employee::with('assignment.property')->get();
         return response()->json([
             'status' => 'success',
-            'result' => $employee->count(),
-            'employee' => $employee
+            'result' => $employees->count(),
+            'employee' => $employees
         ],200);
     }
 
