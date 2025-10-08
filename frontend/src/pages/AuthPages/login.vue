@@ -23,7 +23,7 @@
             v-model="form.email"
             type="email"
             required
-            placeholder="you@example.com"
+            placeholder="Enter email"
             class="w-full border rounded px-3 py-2"
             :class="{ 'border-red-500': clientErrors.includes('Valid email is required') }"
           />
@@ -36,7 +36,7 @@
             v-model="form.password"
             type="password"
             required
-            placeholder="Enter your password"
+            placeholder="Enter password"
             class="w-full border rounded px-3 py-2"
             :class="{ 'border-red-500': clientErrors.includes('Password is required') }"
           />

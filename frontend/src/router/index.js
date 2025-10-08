@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
 // import MainLayout from '../components/MainLayout.vue';
+import Login from '../pages/AuthPages/login.vue';
+import Register from '../pages/AuthPages/register.vue';
+import AdminDashBoard from '../pages/DashBoards/AdminDashBoard.vue';
+import CategoryForm from '../pages/FormPages/CategoryForm.vue';
+import propertyForm from '../pages/FormPages/PropertyForm.vue';
 import Assignment from '../pages/ListingPages/Assignments.vue';
 import Category from '../pages/ListingPages/Categories.vue';
-import AdminDashBoard from '../pages/DashBoards/AdminDashBoard.vue';
 import Employee from '../pages/ListingPages/Employees.vue';
-import Login from '../pages/AuthPages/login.vue';
 import Property from '../pages/ListingPages/Properties.vue';
-import Register from '../pages/AuthPages/register.vue';
 
 const routes = [
   // Public routes
@@ -18,16 +20,17 @@ const routes = [
   {
     path: '/admin',
     component: AdminDashBoard,
-    // meta: {
-    //   layout: MainLayout,
-    //   // requiresAuth: true,
-    //   // role: ["preparer", "admin", "approver"]
-    // },
+
     children: [
       { path: 'assignments', component: Assignment },
       { path: 'categories', component: Category },
+      { path: 'category/add', component: CategoryForm },
+      { path: 'category/edit/:id', component: CategoryForm },
       { path: 'employees', component: Employee },
       { path: 'properties', component: Property },
+      { path: 'property/add', component: propertyForm },
+      { path: 'property/edit/:id', component: propertyForm },
+
       // Default redirect when visiting /admin
       { path: '', redirect: '/admin/assignments' },
     ],

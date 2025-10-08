@@ -2,7 +2,15 @@
   <div class="p-6">
     <!-- Page Title -->
     <h2 class="text-2xl font-bold mb-4">Properties</h2>
-
+   <!-- Add button -->
+    <div class="mb-4 flex justify-end">
+      <router-link
+        to="/admin/property/add"
+        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+      >
+        + Add Property
+      </router-link>
+    </div>
     <!-- =========================
          CATEGORY DROPDOWN FILTER
          ========================= -->
@@ -56,6 +64,8 @@
           <th class="px-4 py-2 border">Model Number</th>
           <th class="px-4 py-2 border">Manufacturer</th>
           <th class="px-4 py-2 border">Current Value</th>
+            <th class="px-4 py-2 border text-center">Actions</th>
+
         </tr>
       </thead>
       <tbody>
@@ -76,6 +86,24 @@
           <td class="px-4 py-2 border">{{ prop.model_number }}</td>
           <td class="px-4 py-2 border">{{ prop.manufacturer }}</td>
           <td class="px-4 py-2 border">{{ prop.current_value }}</td>
+          <td class="px-4 py-2 border text-center space-x-2">
+              <!-- Edit Button -->
+              <router-link
+                :to="`/admin/property/edit/${prop.id}`"
+
+                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+              >
+                Edit
+              </router-link>
+
+              <!-- Delete Button -->
+              <button
+                @click="deleteProperty(prop.id)"
+                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+              >
+                Delete
+              </button>
+            </td>
         </tr>
       </tbody>
     </table>
@@ -94,7 +122,7 @@
  */
 import { computed, onMounted, ref } from 'vue';
 import { useCategoryStore } from '../../stores/CategoryStore';
-import { usePropertyStore } from '../../stores/PropertyStore';
+import { usePropertyStore } from '../../stores/propertyStore';
 
 /**
  * Initialize Pinia stores
@@ -130,4 +158,13 @@ onMounted(() => {
   propertyStore.fetchProperties();
   categoryStore.fetchCategories();
 });
+
+// Delete handler with confirmation
+const deleteProperty = async (id) => {
+  if (confirm('Are you sure you want to delete this property?')) {
+    await propertyStore.deleteProperty(id);
+    // Optionally refetch to refresh list
+    await propertyStore.fetchProperties();
+  }
+};
 </script>

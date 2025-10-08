@@ -65,9 +65,43 @@ class PropertyController extends Controller
             'message' => 'Property deleted successfully'
         ],204);
 }
+// public function update(Request $request, $id)
+// {
+//     // Find the category by ID
+//     $property = Property::find($id);
+
+//     if (!$property) {
+//         return response()->json([
+//             'status' => 'error',
+//             'message' => 'Property not found'
+//         ], 404);
+//     }
+
+//     // Validate input
+//     $validated = $request->validate([
+//             'name' => 'sometimes|required|string|max:225',
+//             'category_id' => 'sometimes|required|exists:categories,id',
+//             'purchase_date'=>'sometimes|required|date',
+//             'purchase_cost'=>'sometimes|required|numeric',
+//             'status'=>'sometimes|required|string|in:available,assigned,maintenance,retired',
+//           'serial_number'=>'sometimes|required|string|unique:properties,serial_number,'.$id,
+
+//             'model_number'=>'sometimes|required|string',
+//             'manufacturer'=>'sometimes|required|string',
+//             'current_value'=>'sometimes|required|numeric'
+//           ]);
+
+//     // Update property
+//     $property->update($validated);
+
+//     return response()->json([
+//         'status' => 'success',
+//         'Property' => $property
+//     ],200);
+// }
+
 public function update(Request $request, $id)
 {
-    // Find the category by ID
     $property = Property::find($id);
 
     if (!$property) {
@@ -77,25 +111,24 @@ public function update(Request $request, $id)
         ], 404);
     }
 
-    // Validate input
     $validated = $request->validate([
-            'name' => 'sometimes|required|string|max:225',
-            'category_id' => 'sometimes|required|exists:categories,id',
-            'purchase_date'=>'sometimes|required|date',
-            'purchase_cost'=>'sometimes|required|numeric',
-            'status'=>'sometimes|required|string|in:available,assigned,maintenance','retired',
-            'serial_number'=>'sometimes|required|string|unique:properties,serial_number'.$id,
-            'model_number'=>'sometimes|required|string',
-            'manufacturer'=>'sometimes|required|string',
-            'current_value'=>'sometimes|required|numeric'
-          ]);
+        'name' => 'sometimes|required|string|max:225',
+        'category_id' => 'sometimes|required|exists:categories,id',
+        'purchase_date' => 'sometimes|required|date',
+        'purchase_cost' => 'sometimes|required|numeric',
+        'status' => 'sometimes|required|string|in:available,assigned,maintenance,retired',
+        'serial_number' => 'sometimes|required|string|unique:properties,serial_number,' . $id,
+        'model_number' => 'sometimes|required|string',
+        'manufacturer' => 'sometimes|required|string',
+        'current_value' => 'sometimes|required|numeric',
+    ]);
 
-    // Update property
     $property->update($validated);
 
     return response()->json([
         'status' => 'success',
         'Property' => $property
-    ],200);
+    ], 200);
 }
+
 }

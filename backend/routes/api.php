@@ -18,7 +18,7 @@ Route::post('/category', [CategoryController::class, 'store']);
 Route::delete('/category/{id}', [CategoryController::class,'destroy']);
 Route::put('/category/{id}', [CategoryController::class, 'update']);
 // property
-Route::get('/property', [PropertyController::class, 'index']);
+Route::get('/properties', [PropertyController::class, 'index']);
 Route::get('/property/{id}', [PropertyController::class, 'show']);
 Route::post('/property', [PropertyController::class, 'store']);
 Route::delete('/property/{id}', [PropertyController::class, 'destroy']);
@@ -38,6 +38,5 @@ Route::delete('/assignment{id}',[AssignmentController::class,'destroy']);
 //auth
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
-// Route::post('/logout',[AuthController::class,'logout']);
+Route::post('/logout',[AuthController::class,'logout']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
-

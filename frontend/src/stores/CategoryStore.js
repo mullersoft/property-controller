@@ -32,8 +32,8 @@ export const useCategoryStore = defineStore('CategoryStore', {
       this.loading = true;
       this.error = null;
       try {
-        const res = await api.get(`/categories/${id}`);
-        this.category = res.data;
+        const res = await api.get(`/category/${id}`);
+        this.category = res.data.category;
       } catch (err) {
         this.error = err.response?.data?.message || err.message;
       } finally {
@@ -46,7 +46,7 @@ export const useCategoryStore = defineStore('CategoryStore', {
       this.loading = true;
       this.error = null;
       try {
-        const res = await api.post('/categories', payload);
+        const res = await api.post('/category', payload);
         this.categories.push(res.data); // update local state
       } catch (err) {
         this.error = err.response?.data?.message || err.message;
@@ -60,7 +60,7 @@ export const useCategoryStore = defineStore('CategoryStore', {
       this.loading = true;
       this.error = null;
       try {
-        const res = await api.put(`/categories/${id}`, payload);
+        const res = await api.put(`/category/${id}`, payload);
         // update local state
         const index = this.categories.findIndex((c) => c.id === id);
         if (index !== -1) this.categories[index] = res.data;
@@ -76,7 +76,7 @@ export const useCategoryStore = defineStore('CategoryStore', {
       this.loading = true;
       this.error = null;
       try {
-        await api.delete(`/categories/${id}`);
+        await api.delete(`/category/${id}`);
         this.categories = this.categories.filter((c) => c.id !== id);
       } catch (err) {
         this.error = err.response?.data?.message || err.message;
