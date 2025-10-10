@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 import api from '../services/api';
 
 export const useAssignmentStore = defineStore('AssignmentStore', {
-  // --- State ---
   state: () => ({
     assignments: [],
     assignment: null,
@@ -10,67 +9,53 @@ export const useAssignmentStore = defineStore('AssignmentStore', {
     error: null,
   }),
 
-  // --- Actions ---
   actions: {
-    // Fetch all categories
     async fetchAssignments() {
       this.loading = true;
-      this.error = null;
       try {
-        const res = await api.get('/assignment');
-        this.assignments = res.data.assignment;
-      } catch (err) {
-        this.error = err.response?.data?.message || err.message;
+        const { data } = await api.get('/assignments');
+        this.assignments = data.assignments;
       } finally {
         this.loading = false;
       }
     },
 
-    // Fetch a single category by ID
     async fetchAssignment(id) {
+      if (!id) return;
       this.loading = true;
-      this.error = null;
       try {
-        const res = await api.get(`/assignment/${id}`);
-        this.category = res.data.assignment;
-      } catch (err) {
-        this.error = err.response?.data?.message || err.message;
+        const { data } = await api.get(`/assignment/${id}`);
+        this.assignment = data.assignment;
       } finally {
         this.loading = false;
       }
     },
 
-    // Create a new assignment
     async createAssignment(payload) {
       this.loading = true;
-      this.error = null;
       try {
-        const res = await api.post('/assignment', payload);
-        this.assignments.push(res.data.assignment); // update local state
+        const { data } = await api.post('/assignment', payload);
+        return data;
       } catch (err) {
-        this.error = err.response?.data?.message || err.message;
+        console.error(err.response?.data);
+        throw err;
       } finally {
         this.loading = false;
       }
     },
 
-    // Update a category
     async updateAssignment(id, payload) {
       this.loading = true;
-      this.error = null;
       try {
-        const res = await api.put(`/assignment/${id}`, payload);
-        // update local state
-        const index = this.assignments.findIndex((c) => c.id === id);
-        if (index !== -1) this.assignments[index] = res.data;
+        const { data } = await api.put(`/assignment/${id}`, payload);
+        return data;
       } catch (err) {
-        this.error = err.response?.data?.message || err.message;
+        console.error(err.response?.data);
+        throw err;
       } finally {
         this.loading = false;
       }
     },
-
-    // Delete a category
     async deleteAssignment(id) {
       this.loading = true;
       this.error = null;

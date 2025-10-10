@@ -41,4 +41,3 @@
     </nav>
   </aside>
 </template>
-

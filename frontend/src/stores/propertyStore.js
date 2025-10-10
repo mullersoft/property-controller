@@ -61,7 +61,7 @@ export const usePropertyStore = defineStore('PropertyStore', {
       this.error = null;
       try {
         const res = await api.put(`/property/${id}`, payload);
-        const index = this.properties.findIndex((c) => c.id === id);
+        const index = this.properties.findIndex((p) => p.id === id);
         if (index !== -1) this.properties[index] = res.data.Property; // ✅ FIXED key name from backend
         this.property = res.data.Property; // ✅ update current property too
       } catch (err) {
@@ -76,7 +76,7 @@ export const usePropertyStore = defineStore('PropertyStore', {
       this.error = null;
       try {
         await api.delete(`/property/${id}`);
-        this.properties = this.properties.filter((c) => c.id !== id);
+        this.properties = this.properties.filter((p) => p.id !== id);
       } catch (err) {
         this.error = err.response?.data?.message || err.message;
       } finally {

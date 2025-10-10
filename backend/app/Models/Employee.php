@@ -19,4 +19,12 @@ class Employee extends Model
         public function assignment(){
             return $this->hasMany(Assignment::class);
         }
+public function properties()
+{
+    return $this->belongsToMany(Property::class, 'assignments')
+        ->withPivot('assigned_date', 'return_date')
+        ->withTimestamps();
+}
+
+
 }

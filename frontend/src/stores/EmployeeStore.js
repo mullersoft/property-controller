@@ -46,7 +46,7 @@ export const useEmployeeStore = defineStore('EmployeeStore', {
       this.error = null;
       try {
         const res = await api.post('/employee', payload);
-        this.employees.push(res.data.employee); // update local state
+        this.employees.push(res.data); // update local state
       } catch (err) {
         this.error = err.response?.data?.message || err.message;
       } finally {

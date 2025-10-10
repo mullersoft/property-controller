@@ -55,15 +55,16 @@
       <thead class="bg-gray-200">
         <tr>
           <th class="px-4 py-2 border">ID</th>
-          <th class="px-4 py-2 border">Category Name</th>
           <th class="px-4 py-2 border">Property Name</th>
+          <th class="px-4 py-2 border">Model Number</th>
+
           <th class="px-4 py-2 border">Purchase Date</th>
           <th class="px-4 py-2 border">Purchase Cost</th>
-          <th class="px-4 py-2 border">Status</th>
-          <th class="px-4 py-2 border">Serial Number</th>
-          <th class="px-4 py-2 border">Model Number</th>
-          <th class="px-4 py-2 border">Manufacturer</th>
-          <th class="px-4 py-2 border">Current Value</th>
+          <th class="px-4 py-2 border">Category Name</th>
+          <!-- <th class="px-4 py-2 border">Status</th> -->
+          <!-- <th class="px-4 py-2 border">Serial Number</th> -->
+          <!-- <th class="px-4 py-2 border">Manufacturer</th> -->
+          <!-- <th class="px-4 py-2 border">Current Value</th> -->
             <th class="px-4 py-2 border text-center">Actions</th>
 
         </tr>
@@ -76,34 +77,42 @@
           class="hover:bg-gray-100"
         >
           <td class="px-4 py-2 border">{{ prop.id }}</td>
-          <td class="px-4 py-2 border">{{ prop.category.name }}</td>
 
           <td class="px-4 py-2 border">{{ prop.name }}</td>
+          <td class="px-4 py-2 border">{{ prop.model_number }}</td>
           <td class="px-4 py-2 border">{{ prop.purchase_date }}</td>
           <td class="px-4 py-2 border">{{ prop.purchase_cost }}</td>
-          <td class="px-4 py-2 border">{{ prop.status }}</td>
-          <td class="px-4 py-2 border">{{ prop.serial_number }}</td>
-          <td class="px-4 py-2 border">{{ prop.model_number }}</td>
-          <td class="px-4 py-2 border">{{ prop.manufacturer }}</td>
-          <td class="px-4 py-2 border">{{ prop.current_value }}</td>
-          <td class="px-4 py-2 border text-center space-x-2">
-              <!-- Edit Button -->
-              <router-link
-                :to="`/admin/property/edit/${prop.id}`"
+          <td class="px-4 py-2 border">{{ prop.category?.name }}</td>
+          <!-- <td class="px-4 py-2 border">{{ prop.status }}</td> -->
+          <!-- <td class="px-4 py-2 border">{{ prop.serial_number }}</td> -->
+          <!-- <td class="px-4 py-2 border">{{ prop.manufacturer }}</td> -->
+          <!-- <td class="px-4 py-2 border">{{ prop.current_value }}</td> -->
+         <td class="px-4 py-2 border text-center space-x-2">
+  <!-- Edit Button -->
+  <router-link
+    :to="`/admin/property/edit/${prop.id}`"
+    class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+  >
+    Edit
+  </router-link>
 
-                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
-              >
-                Edit
-              </router-link>
+  <!-- View Items Button -->
+  <router-link
+    :to="`/admin/property/${prop.id}/items`"
+    class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded"
+  >
+    View
+  </router-link>
 
-              <!-- Delete Button -->
-              <button
-                @click="deleteProperty(prop.id)"
-                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-              >
-                Delete
-              </button>
-            </td>
+  <!-- Delete Button -->
+  <button
+    @click="deleteProperty(prop.id)"
+    class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+  >
+    Delete
+  </button>
+</td>
+
         </tr>
       </tbody>
     </table>

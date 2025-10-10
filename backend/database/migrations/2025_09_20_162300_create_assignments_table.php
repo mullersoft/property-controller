@@ -15,16 +15,16 @@ return new class extends Migration {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
             $table
+                ->foreignId('employee_id')
+                ->constrained('employees')
+                ->restrictOnDelete()
+                ->cascadeOnUpdate();
+            $table
                 ->foreignId('property_id')
                 ->constrained('properties')
                 ->restrictOnDelete()
                 ->cascadeOnUpdate();
 
-            $table
-                ->foreignId('employee_id')
-                ->constrained('employees')
-                ->restrictOnDelete()
-                ->cascadeOnUpdate();
             $table->date('assigned_date');
             $table->date('return_date')->nullable();
             $table->timestamps();

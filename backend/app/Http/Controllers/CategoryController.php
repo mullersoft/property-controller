@@ -11,7 +11,7 @@ class CategoryController extends Controller
     public function index()
     {
         // $getCategories = Category::all();
-        $getCategories = Category::with('property')->get();
+    $getCategories = Category::with('property')->get();
 if($getCategories->isEmpty()){
     return response()->json([
         'status' => 'error',

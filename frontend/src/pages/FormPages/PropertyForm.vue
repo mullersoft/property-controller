@@ -42,6 +42,19 @@
           class="w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300"
         />
       </div>
+      <!-- Quantity -->
+<!-- <div>
+  <label for="quantity" class="block font-medium mb-1">Quantity</label>
+  <input
+    id="quantity"
+    v-model="form.quantity"
+    type="number"
+    min="1"
+    required
+    class="w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300"
+  />
+</div> -->
+
 
       <!-- Category -->
       <div>
@@ -87,7 +100,7 @@
       </div>
 
       <!-- Status -->
-      <div>
+      <!-- <div>
         <label for="status" class="block font-medium mb-1">Status</label>
         <select
           id="status"
@@ -101,10 +114,10 @@
           <option value="maintenance">Maintenance</option>
           <option value="retired">Retired</option>
         </select>
-      </div>
+      </div> -->
 
       <!-- Serial Number -->
-      <div>
+      <!-- <div>
         <label for="serial_number" class="block font-medium mb-1">Serial Number</label>
         <input
           id="serial_number"
@@ -113,7 +126,7 @@
           required
           class="w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300"
         />
-      </div>
+      </div> -->
 
       <!-- Model Number -->
       <div>
@@ -140,7 +153,7 @@
       </div>
 
       <!-- Current Value -->
-      <div>
+      <!-- <div>
         <label for="current_value" class="block font-medium mb-1">Current Value</label>
         <input
           id="current_value"
@@ -149,7 +162,7 @@
           required
           class="w-full border rounded px-3 py-2 focus:ring focus:ring-blue-300"
         />
-      </div>
+      </div> -->
 
       <!-- Buttons -->
       <div class="flex justify-end space-x-2">
@@ -185,7 +198,7 @@ import { usePropertyStore } from '../../stores/propertyStore';
 const router = useRouter();
 const route = useRoute();
 const propertyStore = usePropertyStore();
-const categoryStore = useCategoryStore(); // ✅ lowercase consistent with template
+const categoryStore = useCategoryStore(); // template
 
 const isEdit = ref(false);
 const successMessage = ref('');
@@ -193,19 +206,21 @@ const successMessage = ref('');
 // Form fields
 const form = ref({
   name: '',
+    // quantity: '', // <-- include this!
+
   category_id: '',
   purchase_date: '',
   purchase_cost: '',
-  status: '',
-  serial_number: '',
+  // status: '',
+  // serial_number: '',
   model_number: '',
   manufacturer: '',
-  current_value: '',
+  // current_value: '',
 });
 
 // Detect edit mode
 onMounted(async () => {
-  await categoryStore.fetchCategories(); // ✅ fixed (was fetchCategory)
+  await categoryStore.fetchCategories();
 
   const id = route.params.id;
   if (id) {
@@ -224,31 +239,55 @@ watch(
         category_id: newProperty.category_id || '',
         purchase_date: newProperty.purchase_date || '',
         purchase_cost: newProperty.purchase_cost || '',
-        status: newProperty.status || '',
-        serial_number: newProperty.serial_number || '',
+        // status: newProperty.status || '',
+        // serial_number: newProperty.serial_number || '',
         model_number: newProperty.model_number || '',
         manufacturer: newProperty.manufacturer || '',
-        current_value: newProperty.current_value || '',
+        // current_value: newProperty.current_value || '',
       };
     }
   }
 );
 
-// Handle form submission
 const handleSubmit = async () => {
-  if (isEdit.value) {
-    await propertyStore.updateProperty(route.params.id, form.value);
-    successMessage.value = 'Property updated successfully!';
-  } else {
-    await propertyStore.createProperty(form.value);
-    successMessage.value = 'Property added successfully!';
-    Object.keys(form.value).forEach((key) => (form.value[key] = ''));
-  }
+  // Clear previous messages
+  propertyStore.error = '';
+  successMessage.value = '';
 
-  setTimeout(() => {
-    router.push('/admin/properties');
-  }, 1000);
+  try {
+    // Validate required fields manually (optional)
+    if (!form.value.name || !form.value.category_id || !form.value.purchase_date || !form.value.purchase_cost || !form.value.model_number || !form.value.manufacturer) {
+      propertyStore.error = 'Please fill in all required fields.';
+      return; // Stop submission
+    }
+
+    if (isEdit.value) {
+      await propertyStore.updateProperty(route.params.id, form.value);
+      successMessage.value = 'Property updated successfully!';
+    } else {
+      await propertyStore.createProperty(form.value);
+      successMessage.value = 'Property added successfully!';
+      // Clear form after success
+      Object.keys(form.value).forEach((key) => (form.value[key] = ''));
+    }
+
+    // Only redirect after a short delay (optional)
+    setTimeout(() => {
+      // router.push('/admin/properties');
+    }, 1500);
+
+  } catch (err) {
+    // If backend returns an error, show it and DO NOT redirect
+    if (err.response && err.response.data && err.response.data.message) {
+      propertyStore.error = err.response.data.message;
+    } else {
+      propertyStore.error = 'An unexpected error occurred.';
+    }
+    successMessage.value = ''; // Clear success message on error
+  }
 };
+
+
 
 // Cancel navigation
 const goBack = () => {

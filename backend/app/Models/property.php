@@ -14,11 +14,11 @@ class property extends Model
         'category_id',
         'purchase_date',
         'purchase_cost',
-        'status',
-        'serial_number',
+        // 'status',
+        // 'serial_number',
         'model_number',
         'manufacturer',
-        'current_value',
+        // 'current_value',
     ];
 
     public function category()
@@ -27,5 +27,18 @@ class property extends Model
     }
       public function assignment(){
             return $this->hasMany(Assignment::class);
+
         }
+public function employees()
+{
+    return $this->belongsToMany(Employee::class, 'assignments')
+        ->withPivot('assigned_date', 'return_date')
+        ->withTimestamps();
+}
+public function items()
+{
+    return $this->hasMany(PropertyItem::class);
+}
+
+
 }

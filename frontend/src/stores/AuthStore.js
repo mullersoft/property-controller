@@ -20,11 +20,15 @@ export const useAuthStore = defineStore('AuthStore', {
 
       try {
         const response = await api.post('/login', { email, password });
+
+        // Update state
         this.user = response.data.user;
         this.token = response.data.token;
+
+        // Persist token
         localStorage.setItem('token', response.data.token);
 
-        // Set default authorization header for future requests
+        // Set Axios default header
         api.defaults.headers.common[
           'Authorization'
         ] = `Bearer ${response.data.token}`;
@@ -33,23 +37,35 @@ export const useAuthStore = defineStore('AuthStore', {
       } catch (err) {
         this.error =
           err.response?.data?.message ||
-          'Login failed. Please check your credentials and try again.';
+          'Login failed. Please check your credentials.';
         throw err;
       } finally {
         this.loading = false;
       }
     },
 
-    logout() {
-      this.user = null;
-      this.token = null;
-      this.error = null;
-      localStorage.removeItem('token');
-      delete api.defaults.headers.common['Authorization'];
+    async logout() {
+      this.loading = true;
+      try {
+        // Optional: call backend logout endpoint
+        await api.post('/logout');
+      } catch (err) {
+        console.error('Logout API failed', err);
+      } finally {
+        // Clear state
+        this.user = null;
+        this.token = null;
+        this.error = null;
+
+        // Clear storage & axios header
+        localStorage.removeItem('token');
+        delete api.defaults.headers.common['Authorization'];
+        this.loading = false;
+      }
     },
 
-    // Optional: Add method to check authentication status
-    checkAuth() {
+    initialize() {
+      // Call this on app mount to restore token header if it exists
       if (this.token) {
         api.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
       }
